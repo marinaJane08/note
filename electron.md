@@ -2,27 +2,58 @@
     - on():unresponsive,responsive
     - show(),focus(),getSize(),getPosition(),close()
     - loadURL()
-    - webContents
-        - on():crashed,context-menu
+    - fromWebContents()（OSX）
+    - getFocusedWindow()
+    - fromId()
+    - `webContents`
+        - on():crashed,context-menu,did-finish-load
+        - send()
 - 处理路径`require('path')`
 - 弹出框`require('electron').remote.dialog`
-    - showMessageBox
+    - showMessageBox()
+    - showOpenDialog()
+    - showErrorBox()
+    - showSaveDialog()
 - 进程`process`
     - crash(),hang()
     - platform
+    - versions(.electron)
 - 主进程`app`
     - on():ready,browser-window-created,window-all-closed,browser-window-created
     - getVersion()
     - emit()
+    - getAppPath()
 - 菜单`electron.Menu`
     - setApplicationMenu(Menu.buildFromTemplate(template))
+    - append()
     - popup()
 - 上下文菜单`electron.MenuItem`
-- 进程通信`electron.ipcMain`
+- 全局快捷键`electron.globalShortcut`
+    - register()
+    - unregisterAll()
+- 进程通信`electron.ipcMain` `electron.ipcRenderer`
     - on():show-context-menu
+    - event.sender.send()
+    - sendSync()
+- 操作系统`os`
+    - homedir()
+- 系统托盘`electron.Tray`
+    - setToolTip()
+    - setContextMenu()
+    - destroy()
+- 系统通知`window.Notification`
+- 屏幕`require('electron').screen`
+    - getPrimaryDisplay()
+- 剪贴板`require('electron').clipboard`
+    - writeText()
+    - readText()
+- 屏幕截图`electron.desktopCapturer`
+    - getPrimaryDisplay()
+    - getSources()
 - 自动更新`autoUpdater`
-- 壳`shell`
+- 壳`require('electron').shell`
     - openExternal()
+    - showItemInFolder()
 - 帮助菜单的区别，加速器设置的区别，设置与首选项的区别
 - **vue-cli**的**elctron-vue**模板安装
     - **ESLint、Karma、Mocha、Spectron**等测试工具

@@ -1,0 +1,53 @@
+- 开发环境要求
+    - node、yarn、mysql、python
+- 后台管理客户端
+    - electron-vue脚手架
+        - 技术栈
+            - sass
+            - socket.io
+            - element
+            - lodash
+            - axios、vue-router、vuex
+        - main主进程
+            - ipcMain模块处理渲染进程的请求
+        - main.js入口
+            - 判断是否有登陆
+            - 全局data
+            - jnoos等公共库（lodash）
+        - App.vue主页面
+            - 引入模拟顶部菜单栏
+        - home.vue页面
+            - 禁止选中
+            - 侧边栏
+                - 用户退出
+                - 路由配置（.router-link-active）
+                - 切换mini
+                - [transition[keep-alive[roter-view]]]
+            - 响应socket
+        - device.vue设备信息页面
+            - 内存情况图表
+            - 控制台情况
+            - 主题账户
+            - 主题
+            - 监控
+            - 视频
+        - usermg.vue主题终端账户管理
+            - 切换账号列表与主题分配
+            - 账户管理、新增账户
+            - 主题导入导出
+        - datamg.vue数据管理
+            - 切换主题数据
+            - 查看、搜索、新增、开启、删除数据，分页
+        - videomg.vue
+            - 上传、播放、删除视频
+            - 鼠标效果，分页
+- node后台
+    - 技术栈
+        - express
+        - http、socket.io、async、util、crypto（md5加密）、url、querystring、fs、multer（文件上传）、schedule、cp、mysql（*连接池*）
+    - 上传文件（视频）
+    - 登陆、发送指令、用户操作、主题操作、数据操作
+- 监控
+    - ffmpeg接收视频流，发送到本地端口
+    - wsRlay.js进行流中转（监听本地端口流，发送到客户端）
+    - 客户端使用`jsmpeg`库将服务端数据流转换为canvas渲染到页面上

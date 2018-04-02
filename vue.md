@@ -67,7 +67,6 @@
 
 #资源选项
 - **directives**：自定义指令
-- ****：
 
 ---
 
@@ -75,3 +74,8 @@
 *   实例中的errorCaptured逐一唤起到errorHandler
 *   新错误
 *   false时阻止传播
+
+- 路由
+    - router({routes:[path:,name:,redirect:,component:,children:,（嵌套路由）]})
+    - `router-link to= `（跳转）
+    - `router-view`（显示）
