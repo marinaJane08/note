@@ -3,7 +3,7 @@
 - 本地分支 `git branch`
     - 所有 `git branch -a`
     - 远程 `git branch -r`
-- 向仓库新增文件 `git add .`
+- 向仓库新增所有文件 `git add .`
 - 向仓库新增并提交文件 `git commit -m 'author'`
 - 提交本地仓库到远程仓库 `git remote add origin git@github.com:个人github名/仓库名.git`
 - 向远程仓库推送本地仓库修改 `git push -u origin master`
