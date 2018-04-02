@@ -1,0 +1,14 @@
+- 使用全局命令
+    - --fix参数自动修复
+- 配置方式：js模块、package.json（eslintConfig）
+- 使用发布的配置、需全局安装（因为require）
+- 三个等级：off、warn、error
+- 选项：
+    - extends选择的规则（字符）、公共配置
+    - rules检查选项（对象）
+        - 细分（数组）、第一个是等级
+    - env程序运行环境（对象）、一些变量在其它环境不存在
+- 文档内
+    - /* eslint-disable-next-line */
+    - /* eslint-disable no-new */
+- webpack去除js,vue`loader`配置项

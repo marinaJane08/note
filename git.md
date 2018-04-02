@@ -1,0 +1,15 @@
+- 初始化新仓库 `git init`后生成`.git`目录
+- 仓库状态 `git status`
+- 本地分支 `git branch`
+    - 所有 `git branch -a`
+    - 远程 `git branch -r`
+- 向仓库新增文件 `git add`
+- 向仓库新增并提交文件 `git commit -am 'author'`
+- 提交本地仓库到远程仓库 `git remote add origin git@github.com:个人github名/仓库名.git`
+- 克隆仓库 **git clone** `git://.git newName` `https://.git` `user@server:/path.git`(SSH)
+- 登陆
+    - `git config --global user.name "Your Name"`
+    - `git config --global user.email "email@example.com"`
+- ssh
+    - `ssh-keygen -t rsa -C "youremail@example.com"`
+    - 用户主目录 id_rsa.pub 添加github

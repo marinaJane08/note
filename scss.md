@@ -1,0 +1,27 @@
+- 变量声明
+    - `$highlight-color: #F90;`
+    - `@`
+- 块作用域
+    - Less中局部覆盖父同名，但不会修改变量值，Sass会修改
+- 类嵌套
+- 属性嵌套
+- 父类选择器"嵌套" &代表父块
+- compass监听编译Sass文件、丰富工具库
+- `~`后同层元素/`+`后相邻元素
+- `scss`即以`{}`替代tab
+- 文件名导入
+    - Sass一次性导入生成一个css文件，以`_`开头解析为引用而非css编译，如导入`.css`则会使用原生`import`
+    - 嵌套导入 `.blue-theme {@import "blue-theme"}`
+- `mixin`预定义的样式
+    - Sass需要`@mixin border{}`定义，`@include border;`引用
+    - Less定义同类，引用`.border;`
+    - 带参数，Less`( @radius: 3px )`，Sass`( $radius: 3px )`
+- 颜色函数`background: linear-gradient(top, lighten(@blue, 10%) 0%, @blue 100%);`
+- 命名空间`$defaults{}`
+- 注释`/**/`会被输出，`//`不会
+- 字符串变量，字符串中使用`"@{base_url}/background.png"`
+- js表达式
+- 选择器继承（Sass）`@extend .menu;`
+- 单位换算（Sass）
+- 条件语句（Sass）
+- 输出设置（Sass），`nested, compact, compressed , expanded`

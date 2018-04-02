@@ -1,0 +1,16 @@
+- `es6`包括`ES2015、ES2016、ES2017`
+- `ES1.0(1997)ES2.0(1998)ES3.0(1999)ES4.0(2000/废弃)ES3.1/更名ES5(2008)ES6(2015)`
+- `Babel`转es6到es5
+    - `presets`转码规则[`latest`,`react`,`stage-2`]
+    - `plugins`插件
+    - `babel-register`实时转码`require`文件
+    - `babel-core`提供babelAPI供调用
+    - `babel-polyfill`转码API而不仅是句法
+    - 配合`browserify`进行打包
+    - 配合`ESLint`静态检查代码语法与风格
+        -`"parser":"babel-eslint"`
+    - 配合`mocha`测试
+        -`mocha --ui qunit --compilers js:babel-core/register`
+- `Traceur`浏览器环境转码`BrowserSystem` `bootstrap`
+    - `type="module"`
+    - `metadata`配置项传入
