@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>note</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <style>
+        [v-cloak] {
+            display: none
+        }
+
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .wrap {
+            width: 50%;
+            margin: 1rem auto;
+        }
+        .marginT1{
+            margin-top: 1rem;
+        }
+        .marginB5{
+            margin-bottom: 0.5rem;
+        }
+        .textR{
+            text-align: right;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/iview@2.12.0/dist/styles/iview.css">
+</head>
+
+<body>
+    <div id="app" v-cloak class="wrap">
+        <!-- 当前答题正确个数 -->
+        <Row type="flex" justify="space-around" align="middle"><span>正确答题：{{checked}}</span><i-button style="color:#2d8cf0;" @click="add_new=true" type="text">新增元</i-button></Row>
+        <div>
+        <div v-for="(i1,index1) in data">
+            <div class="marginT1"></div>
+            <Card v-for="(i2,index2) in i1">
+                <!-- 元 -->
+                <p slot="title">{{index2}}
+                </p>
+                <!-- 新增当前元的项 -->
+                <a href="#" slot="extra" @click="addOldItem(index1,index2)">
+                    <Icon type="plus"></Icon>
+                </a>
+
+                <!-- 答题 -->
+                <div v-for="(i3,index3) in i2">
+                    <div v-html="i3.q" class="marginB5"></div>
+                    <i-input class="marginB5" @change.native="change(index1,index2,index3,i3.q,$event.target.value)" placeholder="请输入答案"></i-input>
+                    <span v-show="i3.a.check === true">*</span>
+                    <div v-show="i3.a.check === false" class="textR">{{i3.a.value}}</div>
+                </div>
+            </Card>
+        </div></div>
+        <!-- 添加元数据的项 -->
+        <Modal
+        v-model="add_old"
+        :title="old_item_index2"
+        @on-ok="oldItemDone"
+        @on-cancel="oldItemCancel">
+            <i-input class="marginB5" v-model="old_item.q" placeholder="请输入问题"></i-input>
+            <i-input v-model="old_item.a.value" placeholder="请输入答案"></i-input>
+    </Modal>
+        <!-- 新增元 -->
+        <Modal
+        v-model="add_new"
+        title="新增元"
+        @on-ok="addObj"
+        @on-cancel="addNewCancel">
+        <i-input class="marginB5" v-model="form.key" placeholder="请输入元名称"></i-input>
+        <div v-for="i in form.arr" class="marginB5">
+            <i-input class="marginB5" v-model="i.q" placeholder="请输入问题"></i-input>
+            <i-input v-model="i.a.value" placeholder="请输入答案"></i-input>
+        </div>
+        <div class="textR"><Tooltip placement="top-left" content="新增项"><i-button @click="addItem" type="text" icon="plus-round"></i-button></Tooltip></div>
+    </Modal>
+    </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/localforage@1.7.1/dist/localforage.min.js">       </script>
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise/dist/es6-promise.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/iview@2.12.0/dist/iview.min.js"></script>
+    <script type="text/javascript">
+        function changeJson(name, foo) {
+            fetch(`./${name}.json`).then(function (res) { return res.text(); })
+                .then(foo);
+        }
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    data: [],
+                    checked: 0,
+                    form: {
+                        key: null,
+                        arr: [{ q: null, a: { value: null, check: null } }]
+                    },
+                    add_old: false,
+                    add_new:false,
+                    old_item_index1: null,
+                    old_item_index2: null,
+                    old_item: { q: null, a: { value: null, check: null } }
+                }
+            },
+            methods: {
+                change(i1, i2, i3, q, anwser) {//答题
+                    if (this.data[i1][i2][i3].a.value === anwser) {
+                        this.$set(this.data[i1][i2][i3].a, 'check', true)
+                        this.checked++; //正确答题数
+                    } else {
+                        this.$set(this.data[i1][i2][i3].a, 'check', false)
+                    }
+                },
+                addItem() { //新增元的多个记录
+                    this.form.arr.push({ q: null, a: { value: null, check: null } })
+                },
+                addObj() { //新增元
+                    this.data.push({ [this.form.key]: this.form.arr });
+                    localforage.setItem(this.form.key, this.form.arr);
+                    this.form = {
+                        key: null,
+                        arr: [{ q: null, a: { value: null, check: null } }]
+                    }
+                    this.add_new=false;
+                },
+                addNewCancel(){
+                    this.form = {
+                        key: null,
+                        arr: [{ q: null, a: { value: null, check: null } }]
+                    }
+                    this.add_new=false;
+                },
+                addOldItem(index1, index2) { //添加目标元
+                    this.old_item_index1 = index1;
+                    this.old_item_index2 = index2;
+                    this.add_old = true;
+                },
+                oldItemDone() { //新增记录到已有的元
+                    this.data[this.old_item_index1][this.old_item_index2].push(this.old_item);
+                    localforage.getItem(this.old_item_index2).then((val) => {
+                        if (val !== null) {
+                            val.push(this.old_item)
+                            localforage.setItem(this.old_item_index2, val);
+                        } else {
+                            localforage.setItem(this.old_item_index2, [this.old_item]);
+                        }
+                        this.old_item = { q: null, a: { value: null, check: null } }
+                        this.add_old = false;
+                    });
+                },
+                oldItemCancel(){
+                    this.old_item = { q: null, a: { value: null, check: null } }
+                    this.add_old = false;
+                }
+            },
+            mounted() {
+                // 本地存储数据获取
+                this.$Loading.start();
+                localforage.iterate((value, key, iterationNumber) => {
+                    this.data.push({[key]:value})
+                }).then((result) => {
+                    // 获取json文件
+                    // changeJson('es6', text => {
+                    // let t = JSON.parse(text).data;
+                    // this.data = t.concat(result);
+                    this.$Loading.finish();
+                    // })
+                }).catch((err) => {
+                    console.log(err);
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
